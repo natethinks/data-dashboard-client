@@ -51,5 +51,19 @@ app.get('/publications', function(req, res){
 	  })
 })
 
+app.get('/charts', function(req, res){
+  request
+	.get('http://localhost:8080/charts')
+	.end(function(err, data) {
+	  if(data.status == 403) {
+		res.send(403, '403 forbidden')
+	  } else {
+		var charts = data.body;
+		res.render('charts', { charts : charts}); 
+	  }
+  })
+})
 
-app.listen(3000);
+var port = 3000;
+console.log("listening on port " + port);
+app.listen(port);
